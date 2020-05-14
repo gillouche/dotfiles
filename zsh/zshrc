@@ -94,7 +94,7 @@ setopt promptsubst
 #
 ###### Alias ######
 #
-source ${HOME}/.zsh/alias.conf
+source ${HOME}/workspace/dotfiles/zsh/alias.conf
 
 #
 ###### Environment variables #######
