@@ -1,0 +1,16 @@
+<config>
+  <!-- Network -->
+  <proxy v=':8080'/>
+
+  <!-- User Information -->
+  <team v='45032'/>
+  <user v='gillouche'/>
+
+  <!-- Folding Slots -->
+  <slot id='0' type='CPU'>
+    <paused v='true'/>
+  </slot>
+  <slot id='1' type='GPU'>
+    <paused v='true'/>
+  </slot>
+</config>
