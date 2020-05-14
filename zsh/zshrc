@@ -73,6 +73,7 @@ plugins=(
 #
 typeset -U path
 path=($path[@])
+path+=("/home/gillouche/.config/yarn/global/node_modules/.bin")
 path+=("/home/gillouche/workspace/scripts")
 
 #
@@ -105,3 +106,4 @@ export SYSTEMD_PAGER=vim
 export PLASMA_USE_QT_SCALING=1
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
 export QT_SCALE_FACTOR=1
+export CHROME_BIN=/usr/bin/chromium
