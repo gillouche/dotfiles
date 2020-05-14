@@ -73,6 +73,7 @@ plugins=(
 #
 typeset -U path
 path=($path[@])
+path+=("/home/gillouche/workspace/scripts")
 
 #
 ###### Execute scripts #######
