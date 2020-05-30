@@ -1,0 +1,20 @@
+{
+    "codeCellConfig": {
+        "autoClosingBrackets": true,
+        "lineNumbers": true,
+        "matchBrackets": true,
+        "insertSpaces": true,
+        "tabSize": 4,
+        "wordWrapColumn": 120
+    },
+    "markdownCellConfig": {
+        "autoClosingBrackets": true,
+        "lineNumbers": true,
+        "lineWrap": "on",
+        "matchBrackets": true,
+        "insertSpaces": true,
+        "tabSize": 4,
+        "wordWrapColumn": 120
+    },
+    "kernelShutdown": true,
+}
