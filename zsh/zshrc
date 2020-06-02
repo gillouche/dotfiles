@@ -115,5 +115,5 @@ export PATH="$HOME/kde/src/kdesrc-build:$PATH"
 # Create alias for running software built with kdesrc-build
 kdesrc-run ()
 {
-  source "$HOME/kde/build/$1/prefix.sh" && "$HOME/kde/usr/bin/$1"
+  source "$HOME/workspace/kde/build/$1/prefix.sh" && "$HOME/workspace/kde/usr/bin/$1"
 }
