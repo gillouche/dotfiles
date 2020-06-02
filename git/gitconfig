@@ -64,3 +64,7 @@
 [web]
     browser = firefox
 
+[url "https://invent.kde.org/"]
+	insteadOf = kde:
+[url "ssh://git@invent.kde.org/"]
+	pushInsteadOf = kde:
