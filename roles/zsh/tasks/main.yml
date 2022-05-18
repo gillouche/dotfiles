@@ -28,11 +28,11 @@
   when: not ohmyzsh_folder.stat.exists
 
 - name: Install oh-my-zsh 
-  shell: bash /tmp/ohmyzsh_install.sh
+  shell: yes | bash /tmp/ohmyzsh_install.sh
   become_user: "{{ target_user }}"
   when: not ohmyzsh_folder.stat.exists
 
-- name: Check for zsh config directorye
+- name: Check for zsh config directory
   stat:
     path: "/home/{{ target_user }}/.zsh"
   register: zsh_config_folder
@@ -58,6 +58,11 @@
     - alias.conf
     - zshrc
 
+- name: Delete config created by oh-my-zsh install
+  file:
+    path: "/home/{{ target_user }}/.zshrc"
+    state: absent
+
 - name: Create symlink to zshrc config 
   file:
     src: "/home/{{ target_user }}/.zsh/zshrc"
@@ -65,3 +70,9 @@
     owner: "{{ target_user }}"
     group: "{{ target_user }}"
     state: link
+
+- name: Change user shell to zsh 
+  user:
+    name: "{{ target_user }}"
+    shell: /usr/bin/zsh
+
