@@ -21,6 +21,11 @@
     group: "{{ target_user }}"
     mode: 0600
 
+- name: Check for systemd user directory
+  stat:
+    path: "/home/{{ target_user }}/.config/systemd/user"
+  register: systemd_user_directory
+
 - name: Create systemd user directory
   file:
     path: "/home/{{ target_user }}/.config/systemd/user"
@@ -29,6 +34,7 @@
     owner: "{{ target_user }}"
     group: "{{ target_user }}"
     mode: 0755
+  when: not systemd_user_directory.stat.exists
 
 - name: Copy tmux systemd service 
   copy: 

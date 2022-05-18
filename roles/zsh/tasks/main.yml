@@ -1,0 +1,67 @@
+---
+# tasks file for zsh
+
+- name: Install zsh (Ubuntu/Debian)
+  apt:
+    name: zsh
+    state: latest
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: Install zsh (Arch)
+  pacman:
+    name: zsh
+    state: latest
+  when: ansible_distribution == 'Archlinux'
+
+- name: Check for .oh-my-zsh
+  stat:
+    path: "/home/{{ target_user }}/.oh-my-zsh"
+  register: ohmyzsh_folder
+
+- name: Download oh-my-zsh install script
+  get_url:
+    url: https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/ohmyzsh_install.sh
+    mode: 0555
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+  when: not ohmyzsh_folder.stat.exists
+
+- name: Install oh-my-zsh 
+  shell: bash /tmp/ohmyzsh_install.sh
+  become_user: "{{ target_user }}"
+  when: not ohmyzsh_folder.stat.exists
+
+- name: Check for zsh config directorye
+  stat:
+    path: "/home/{{ target_user }}/.zsh"
+  register: zsh_config_folder
+
+- name: Create zsh config directory
+  file:
+    path: "/home/{{ target_user }}/.zsh"
+    state: directory 
+    recurse: true
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: 0755
+  when: not zsh_config_folder.stat.exists
+
+- name: Copy config files
+  copy: 
+    src: "{{ item }}"
+    dest: "/home/{{ target_user }}/.zsh/{{ item }}"
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: 0600
+  with_items:
+    - alias.conf
+    - zshrc
+
+- name: Create symlink to zshrc config 
+  file:
+    src: "/home/{{ target_user }}/.zsh/zshrc"
+    dest: "/home/{{ target_user }}/.zshrc"
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    state: link
