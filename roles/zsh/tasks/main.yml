@@ -13,10 +13,15 @@
     state: latest
   when: ansible_distribution == 'Archlinux'
 
-- name: Check for .oh-my-zsh
+- name: Check for .oh-my-zsh for user
   stat:
     path: "/home/{{ target_user }}/.oh-my-zsh"
-  register: ohmyzsh_folder
+  register: ohmyzsh_user_folder
+
+- name: Check for .oh-my-zsh for root
+  stat:
+    path: "/root/.oh-my-zsh"
+  register: ohmyzsh_root_folder
 
 - name: Download oh-my-zsh install script
   get_url:
@@ -25,19 +30,28 @@
     mode: 0555
     owner: "{{ target_user }}"
     group: "{{ target_user }}"
-  when: not ohmyzsh_folder.stat.exists
+  when: not ohmyzsh_user_folder.stat.exists or not ohmyzsh_root_folder.stat.exists
 
-- name: Install oh-my-zsh 
+- name: Install oh-my-zsh for user
   shell: yes | bash /tmp/ohmyzsh_install.sh
   become_user: "{{ target_user }}"
-  when: not ohmyzsh_folder.stat.exists
+  when: not ohmyzsh_user_folder.stat.exists
 
-- name: Check for zsh config directory
+- name: Install oh-my-zsh for root
+  shell: yes | bash /tmp/ohmyzsh_install.sh
+  when: not ohmyzsh_root_folder.stat.exists
+
+- name: Check for zsh config directory for user
   stat:
     path: "/home/{{ target_user }}/.zsh"
-  register: zsh_config_folder
+  register: zsh_config_folder_user
 
-- name: Create zsh config directory
+- name: Check for zsh config directory for root
+  stat:
+    path: "/root/.zsh"
+  register: zsh_config_folder_root
+
+- name: Create zsh config directory for user
   file:
     path: "/home/{{ target_user }}/.zsh"
     state: directory 
@@ -45,9 +59,17 @@
     owner: "{{ target_user }}"
     group: "{{ target_user }}"
     mode: 0755
-  when: not zsh_config_folder.stat.exists
+  when: not zsh_config_folder_user.stat.exists
 
-- name: Copy config files
+- name: Create zsh config directory for root
+  file:
+    path: "/root/.zsh"
+    state: directory 
+    recurse: true
+    mode: 0700
+  when: not zsh_config_folder_root.stat.exists
+
+- name: Copy config files for user
   copy: 
     src: "{{ item }}"
     dest: "/home/{{ target_user }}/.zsh/{{ item }}"
@@ -58,12 +80,26 @@
     - alias.conf
     - zshrc
 
-- name: Delete config created by oh-my-zsh install
+- name: Copy config files for root
+  copy: 
+    src: "{{ item }}"
+    dest: "/root/.zsh/{{ item }}"
+    mode: 0600
+  with_items:
+    - alias.conf
+    - zshrc
+
+- name: Delete config created by oh-my-zsh install for user
   file:
     path: "/home/{{ target_user }}/.zshrc"
     state: absent
 
-- name: Create symlink to zshrc config 
+- name: Delete config created by oh-my-zsh install for root
+  file:
+    path: "/root/.zshrc"
+    state: absent
+
+- name: Create symlink to zshrc config for user
   file:
     src: "/home/{{ target_user }}/.zsh/zshrc"
     dest: "/home/{{ target_user }}/.zshrc"
@@ -71,8 +107,19 @@
     group: "{{ target_user }}"
     state: link
 
-- name: Change user shell to zsh 
+- name: Create symlink to zshrc config for root
+  file:
+    src: "/root/.zsh/zshrc"
+    dest: "/root/.zshrc"
+    state: link
+
+- name: Change user shell to zsh for user
   user:
     name: "{{ target_user }}"
+    shell: /usr/bin/zsh
+
+- name: Change user shell to zsh for root
+  user:
+    name: "root"
     shell: /usr/bin/zsh
 
