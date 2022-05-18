@@ -92,7 +92,18 @@ function get_ip {
 #
 ###### Prompt #######
 #
+
+# Arch home
 local_ip=`get_ip enp6s0`
+if [ -z "${local_ip}" ]; then
+  # Arch VM
+  local_ip=`get_ip enp0s3`
+
+  if [ -z "${local_ip}" ]; then
+    # Kali
+    local_ip=`get_ip eth0`
+  fi
+fi
 vpn_ip=`get_ip tun0`
 
 if [ -z "${vpn_ip}" ]; then
