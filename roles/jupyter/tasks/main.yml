@@ -1,0 +1,52 @@
+---
+# tasks file for jupyterlab
+
+- name: Check for jupyter directory
+  stat:
+    path: "/home/{{ target_user }}/.jupyter"
+  register: jupyter_folder
+
+- name: Create jupyter directory
+  file:
+    path: /home/{{ target_user }}/.jupyter
+    state: directory
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: 0755
+  when: not jupyter_folder.stat.exists
+
+- name: Copy jupyter notebook config json
+  copy:
+    src: jupyter_notebook_config.json
+    dest: /home/{{ target_user }}/.jupyter/jupyter_notebook_config.json
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: 0644
+
+- name: Check for jupyterlab directory
+  stat:
+    path: "/home/{{ target_user }}/.jupyter/lab/user-settings"
+  register: jupyterlab_folder
+
+- name: Create jupyterlab directory
+  file:
+    path: /home/{{ target_user }}/.jupyter/lab/user-settings
+    state: directory
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: 0755
+  when: not jupyterlab_folder.stat.exists
+
+- name: Copy jupyterlab config
+  copy: 
+    src: "{{ item }}"
+    dest: "/home/{{ target_user }}/.jupyter/lab/user-settings/{{ item }}"
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: 0755
+  with_items: 
+    - apputils-extension
+    - codemirror-extension
+    - extensionmanager-extension
+    - notebook-extension
+
