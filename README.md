@@ -3,6 +3,7 @@ dotfiles deployed with ansible
 
 ## Requirements
 - python3
+- pip
 
 ## Setup
 ```bash
