@@ -1,0 +1,22 @@
+---
+# tasks file for git
+
+- name: Install git (Ubuntu/Debian)
+  apt:
+    name: git
+    state: latest
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: Install git (Arch)
+  pacman:
+    name: git
+    state: latest
+  when: ansible_distribution == 'Archlinux'
+
+- name: Copy gitconfig
+  copy:
+    src: gitconfig
+    dest: "/home/{{ target_user }}/.gitconfig"
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: 0600

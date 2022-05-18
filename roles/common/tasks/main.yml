@@ -1,0 +1,12 @@
+---
+# tasks file for common
+
+- name: Print all available facts
+  ansible.builtin.debug:
+    var: ansible_facts
+    verbosity: 4
+  register: result
+
+- name: Stop playbook after debug
+  meta: end_host
+  when: result.skipped is not defined

@@ -1,0 +1,79 @@
+[user]
+    name = Gilles Habran
+    email = gilleshabran@protonmail.com
+    signingkey = 3E72F79037D9CD8D
+
+[color]
+    ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+    
+[color "branch"]
+    current = yellow bold
+    local = green bold
+    remote = cyan bold
+    
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+    
+[color "status"]
+    added = green bold
+    changed = yellow bold
+    untracked = red bold
+
+[core]
+    autocrlf = input
+    editor = nvim
+    whitespace = fix,-indent-with-non-tab,trailing-space
+
+[push]
+    default = matching
+	gpgSign = false
+
+[alias]
+    c = commit
+    ca = commit -a
+    cm = commit -m
+    cd = commit --amend
+    cad = commit -a --amend
+    co = checkout
+    cob = checkout -b
+    st = status
+    br = branch
+    bd = branch -d
+    f = fetch
+    fo = fetch origin
+    fu = fetch upstream
+    l = log --oneline
+    lg = log --oneline --graph --decorate
+    m = merge
+    pl = pull
+    pb = pull --rebase
+    pu = push
+    rb = rebase
+    re = reset
+    rh = reset HEAD
+    reh = reset --hard
+    rehh = reset --hard HEAD
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+   
+[web]
+    browser = firefox
+[url "https://invent.kde.org/"]
+	insteadOf = kde:
+[url "ssh://git@invent.kde.org/"]
+	pushInsteadOf = kde:
+[pull]
+	rebase = false
+[commit]
+	gpgsign = false
+[gpg]
+	program = gpg2
+[receive]
+	advertisePushOptions = true
