@@ -1,0 +1,12 @@
+---
+# tasks file for idea
+
+- name: Copy specific config inotify for intellij
+  copy: 
+    src: idea.conf
+    dest: /etc/sysctl.d/idea.conf 
+    mode: 0644 
+    owner: root
+    group: root
+  notify:
+    - Flush sysctl

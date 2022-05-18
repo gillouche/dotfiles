@@ -1,0 +1,7 @@
+---
+# handlers file for idea
+
+ - name: Flush sysctl
+   shell: sudo sysctl -p --system
+
+...
