@@ -1,0 +1,49 @@
+---
+# tasks file for neovim
+
+- name: Install neovim (Ubuntu/Debian)
+  apt:
+    name: neovim
+    state: latest
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: Install neovim (Arch)
+  pacman:
+    name: neovim
+    state: latest
+  when: ansible_distribution == 'Archlinux'
+
+- name: Check if nvim config folder exists 
+  stat:
+    path: "/home/{{ target_user }}/.config/nvim"
+  register: nvim_config_folder
+
+- name: Create nvim config folder
+  file:
+    path: "/home/{{ target_user }}/.config/nvim"
+    state: directory 
+    recurse: true
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: 0755
+  when: not nvim_config_folder.stat.exists
+
+- name: Copy config folders
+  copy:
+    src: "{{ item }}" 
+    dest: "/home/{{ target_user }}/.config/nvim/{{ item }}"
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+  with_items:
+    - colors 
+    - config 
+    - init.vim
+
+- name: Copy nvimrc 
+  copy:
+    src: vimrc
+    dest: "/home/{{ target_user }}/.nvimrc"
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: 0755
+  
