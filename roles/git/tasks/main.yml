@@ -13,10 +13,13 @@
     state: latest
   when: ansible_distribution == 'Archlinux'
 
-- name: Copy gitconfig
-  copy:
-    src: gitconfig
+- name: Remove existing .gitconfig 
+  file:
+    path: "/home/{{ target_user }}/.gitconfig"
+    state: absent
+
+- name: Link gitconfig
+  file:
+    src: "{{ role_path }}/files/gitconfig"
     dest: "/home/{{ target_user }}/.gitconfig"
-    owner: "{{ target_user }}"
-    group: "{{ target_user }}"
-    mode: 0600
+    state: link

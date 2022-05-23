@@ -15,13 +15,11 @@
     mode: 0755
   when: not jupyter_folder.stat.exists
 
-- name: Copy jupyter notebook config json
-  copy:
-    src: jupyter_notebook_config.json
+- name: Create symlink jupyter notebook config json
+  file:
+    src: "{{ role_path }}/files/jupyter_notebook_config.json"
     dest: /home/{{ target_user }}/.jupyter/jupyter_notebook_config.json
-    owner: "{{ target_user }}"
-    group: "{{ target_user }}"
-    mode: 0644
+    state: link
 
 - name: Check for jupyterlab directory
   stat:
@@ -37,13 +35,11 @@
     mode: 0755
   when: not jupyterlab_folder.stat.exists
 
-- name: Copy jupyterlab config
-  copy: 
-    src: "{{ item }}"
+- name: Create symlink to jupyterlab config
+  file: 
+    src: "{{ role_path }}/files/{{ item }}"
     dest: "/home/{{ target_user }}/.jupyter/lab/user-settings/{{ item }}"
-    owner: "{{ target_user }}"
-    group: "{{ target_user }}"
-    mode: 0755
+    state: link
   with_items: 
     - apputils-extension
     - codemirror-extension

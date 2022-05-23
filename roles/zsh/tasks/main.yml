@@ -69,25 +69,21 @@
     mode: 0700
   when: not zsh_config_folder_root.stat.exists
 
-- name: Copy config files for user
-  copy: 
-    src: "{{ item }}"
+- name: Create symlink config files for user
+  file: 
+    src: "{{ role_path }}/files/{{ item }}"
     dest: "/home/{{ target_user }}/.zsh/{{ item }}"
-    owner: "{{ target_user }}"
-    group: "{{ target_user }}"
-    mode: 0600
+    state: link
   with_items:
     - alias.conf
-    - zshrc
 
-- name: Copy config files for root
-  copy: 
-    src: "{{ item }}"
+- name: Create symlink config files for root
+  file: 
+    src: "{{ role_path }}/files/{{ item }}"
     dest: "/root/.zsh/{{ item }}"
-    mode: 0600
+    state: link
   with_items:
     - alias.conf
-    - zshrc
 
 - name: Delete config created by oh-my-zsh install for user
   file:
@@ -101,7 +97,7 @@
 
 - name: Create symlink to zshrc config for user
   file:
-    src: "/home/{{ target_user }}/.zsh/zshrc"
+    src: "{{ role_path }}/files/zshrc"
     dest: "/home/{{ target_user }}/.zshrc"
     owner: "{{ target_user }}"
     group: "{{ target_user }}"
@@ -109,7 +105,7 @@
 
 - name: Create symlink to zshrc config for root
   file:
-    src: "/root/.zsh/zshrc"
+    src: "{{ role_path }}/files/zshrc"
     dest: "/root/.zshrc"
     state: link
 

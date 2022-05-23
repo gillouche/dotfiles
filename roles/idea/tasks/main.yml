@@ -1,12 +1,15 @@
 ---
 # tasks file for idea
 
-- name: Copy specific config inotify for intellij
-  copy: 
-    src: idea.conf
+- name: Remove existing idea.conf 
+  file: 
+    path: /etc/sysctl.d/idea.conf
+    state: absent
+
+- name: Create symlink for specific config inotify for intellij
+  file: 
+    src: "{{ role_path }}/files/idea.conf"
     dest: /etc/sysctl.d/idea.conf 
-    mode: 0644 
-    owner: root
-    group: root
+    state: link
   notify:
     - Flush sysctl

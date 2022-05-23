@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 
-set -e
-playbook=$1
-verbosity=$2
+set -eou pipefail
 
-if [ -z "${playbook}" ]; then
-    echo "playbook name must be provided. Possible values: home, pentest"
-    echo "Example: ./run.sh home"
-    exit -1
+if [ -n "${1+set}" ]; then
+    verbosity="$1"
+else
+    verbosity=""
 fi
 
 TARGET_USER=$USER
-sudo su -c "ansible-playbook -i hosts.yml "playbook_${playbook}.yml" --extra-vars 'target_user=$TARGET_USER' ${verbosity}"
+sudo su -c "ansible-playbook -i hosts.yml "playbook.yml" --extra-vars 'target_user=$TARGET_USER' ${verbosity}"
