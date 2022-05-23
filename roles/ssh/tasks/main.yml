@@ -5,7 +5,7 @@
   apt:
     name: openssh-client
     state: latest
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+  when: ansible_facts['os_family'] == "Debian"
 
 - name: Install openssh (Arch)
   pacman:

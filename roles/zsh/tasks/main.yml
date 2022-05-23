@@ -5,7 +5,7 @@
   apt:
     name: zsh
     state: latest
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+  when: ansible_facts['os_family'] == "Debian"
 
 - name: Install zsh (Arch)
   pacman:
@@ -21,6 +21,7 @@
 - name: Check for .oh-my-zsh for root
   stat:
     path: "/root/.oh-my-zsh"
+  become: true
   register: ohmyzsh_root_folder
 
 - name: Download oh-my-zsh install script
@@ -39,6 +40,7 @@
 
 - name: Install oh-my-zsh for root
   shell: yes | bash /tmp/ohmyzsh_install.sh
+  become: true
   when: not ohmyzsh_root_folder.stat.exists
 
 - name: Check for zsh config directory for user
@@ -49,6 +51,7 @@
 - name: Check for zsh config directory for root
   stat:
     path: "/root/.zsh"
+  become: true
   register: zsh_config_folder_root
 
 - name: Create zsh config directory for user
@@ -67,6 +70,7 @@
     state: directory 
     recurse: true
     mode: 0700
+  become: true
   when: not zsh_config_folder_root.stat.exists
 
 - name: Create symlink config files for user
@@ -82,6 +86,7 @@
     src: "{{ role_path }}/files/{{ item }}"
     dest: "/root/.zsh/{{ item }}"
     state: link
+  become: true
   with_items:
     - alias.conf
 
@@ -94,6 +99,7 @@
   file:
     path: "/root/.zshrc"
     state: absent
+  become: true
 
 - name: Create symlink to zshrc config for user
   file:
@@ -108,6 +114,7 @@
     src: "{{ role_path }}/files/zshrc"
     dest: "/root/.zshrc"
     state: link
+  become: true
 
 - name: Change user shell to zsh for user
   user:
@@ -118,4 +125,5 @@
   user:
     name: "root"
     shell: /usr/bin/zsh
+  become: true
 

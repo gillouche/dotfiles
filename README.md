@@ -2,7 +2,7 @@
 dotfiles deployed with ansible
 
 ## Requirements
-- python3
+- python3, pip, python3-venv
 
 ## Setup
 ```bash

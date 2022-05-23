@@ -5,11 +5,13 @@
   file: 
     path: /etc/sysctl.d/idea.conf
     state: absent
+  become: true
 
 - name: Create symlink for specific config inotify for intellij
   file: 
     src: "{{ role_path }}/files/idea.conf"
     dest: /etc/sysctl.d/idea.conf 
     state: link
+  become: true
   notify:
     - Flush sysctl
