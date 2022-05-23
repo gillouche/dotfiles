@@ -28,22 +28,19 @@
     mode: 0755
   when: not nvim_config_folder.stat.exists
 
-- name: Copy config folders
-  copy:
-    src: "{{ item }}" 
+- name: Create symlink for config folders
+  file:
+    src: "{{ role_path }}/files/{{ item }}" 
     dest: "/home/{{ target_user }}/.config/nvim/{{ item }}"
-    owner: "{{ target_user }}"
-    group: "{{ target_user }}"
+    state: link
   with_items:
     - colors 
     - config 
     - init.vim
 
-- name: Copy nvimrc 
-  copy:
-    src: vimrc
+- name: Create symlink for nvimrc 
+  file:
+    src: "{{ role_path }}/files/vimrc"
     dest: "/home/{{ target_user }}/.nvimrc"
-    owner: "{{ target_user }}"
-    group: "{{ target_user }}"
-    mode: 0755
+    state: link
   

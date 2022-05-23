@@ -1,0 +1,14 @@
+---
+# tasks file for ssh
+
+- name: Install openssh (Ubuntu/Debian)
+  apt:
+    name: openssh-client
+    state: latest
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: Install openssh (Arch)
+  pacman:
+    name: openssh-client
+    state: latest
+  when: ansible_distribution == 'Archlinux'

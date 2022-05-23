@@ -1,10 +1,10 @@
 - hosts: localhost
   roles:
-    - common
+    - facts
     - git
+    - gpg
     - idea
     - tmux
     - zsh
-    - kde-dev
     - jupyter 
     - neovim

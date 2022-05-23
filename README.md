@@ -3,7 +3,6 @@ dotfiles deployed with ansible
 
 ## Requirements
 - python3
-- pip
 
 ## Setup
 ```bash
@@ -13,9 +12,15 @@ pip3 install -r requirements.txt
 ```
 
 ## Run
-run.sh needs to be execute with either home or pentest which corresponds to the playbook name.
+```bash
+bash run.sh
+```
+
+Additionally, the verbosity can be passed to the script
 
 ```bash
-./run.sh home
+bash run.sh -vvvv
 ```
+
+which will print the facts (for -vvvv only) and exits.
 

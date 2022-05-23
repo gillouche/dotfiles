@@ -1,0 +1,14 @@
+---
+# tasks file for gpg
+
+- name: Install pgp (Ubuntu/Debian)
+  apt:
+    name: gnupg2
+    state: latest
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: Install gnupg (Arch)
+  pacman:
+    name: gnupg
+    state: latest
+  when: ansible_distribution == 'Archlinux'

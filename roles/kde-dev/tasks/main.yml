@@ -1,9 +1,0 @@
----
-# tasks file for kde-dev
-- name: Copy kdesrc template
-  template:
-    src: kdesrc-buildrc
-    dest: "/home/{{ target_user }}/.kdesrc-buildrc"
-    owner: "{{ target_user }}"
-    group: "{{ target_user }}"
-    mode: 0644

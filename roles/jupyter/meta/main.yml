@@ -1,2 +1,3 @@
 dependencies: 
-  - role: common
+  - role: facts
+    when: facts_was_executed is not defined
