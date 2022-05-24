@@ -5,12 +5,14 @@
   apt:
     name: neovim
     state: latest
+  become: true
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Install neovim (Arch)
   pacman:
     name: neovim
     state: latest
+  become: true
   when: ansible_distribution == 'Archlinux'
 
 - name: Check if nvim config folder exists 

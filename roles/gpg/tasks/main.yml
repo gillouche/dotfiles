@@ -5,10 +5,12 @@
   apt:
     name: gnupg2
     state: latest
+  become: true
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Install gnupg (Arch)
   pacman:
     name: gnupg
     state: latest
+  become: true
   when: ansible_distribution == 'Archlinux'

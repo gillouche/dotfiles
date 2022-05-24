@@ -5,12 +5,14 @@
   apt:
     name: zsh
     state: latest
+  become: true
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Install zsh (Arch)
   pacman:
     name: zsh
     state: latest
+  become: true
   when: ansible_distribution == 'Archlinux'
 
 - name: Check for .oh-my-zsh for user
