@@ -107,9 +107,9 @@ fi
 vpn_ip=`get_ip tun0`
 
 if [ -z "${vpn_ip}" ]; then
-  display_ip=$local_ip 
+  display_ip="local:$local_ip" 
 else
-  display_ip=$vpn_ip
+  display_ip="vpn:$vpn_ip"
 fi 
 
 if [[ `whoami` == "root" ]]; then
