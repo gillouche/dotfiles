@@ -112,7 +112,7 @@ function get_ip {
 ###### Prompt #######
 #
 if [[ `whoami` == "root" ]]; then
-  PS1='[%F{yellow}%*%f]-[%F{blue}$(get_ip)%f]-[%F{red}%n%f@%F{blue}%m%f]-[%F{red}%~%f] $ '
+  PS1='[%F{yellow}%*%f]-[%F{blue}$(get_ip)%f]-[%F{red}%n%f@%F{blue}%m%f]-[%F{red}%~%f] # '
 else
   PS1='[%F{yellow}%*%f]-[%F{blue}$(get_ip)%f]-[%F{green}%n%f@%F{blue}%m%f]-[%F{green}%~%f] $ '
 fi
