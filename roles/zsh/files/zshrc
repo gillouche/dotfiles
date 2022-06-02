@@ -85,37 +85,36 @@ source $ZSH/oh-my-zsh.sh
 ###### Functions #######
 #
 function get_ip {
-  value="$(ifconfig $1 2> /dev/null | grep "inet " | cut -d " " -f 10)"
-  echo "$value"
+  eth0_ip="$(ifconfig eth0 2> /dev/null | grep "inet " | cut -d " " -f 10)"
+  enp6s0_ip="$(ifconfig enp6s0 2> /dev/null | grep "inet " | cut -d " " -f 10)"
+  enp0s3_ip="$(ifconfig enp0s3 2> /dev/null | grep "inet " | cut -d " " -f 10)"
+  tun0_ip="$(ifconfig tun0 2> /dev/null | grep "inet " | cut -d " " -f 10)"
+  
+  local_ip="127.0.0.1"
+  if [ ! -z ${eth0_ip} ]; then
+    local_ip="${eth0_ip}"
+  elif [ ! -z ${enp6s0_ip} ]; then
+    local_ip="${enp6s0_ip}"
+  elif [ ! -z ${enp0s3_ip} ]; then
+    local_ip="${enp0s3_ip}"
+  fi
+  
+  display_ip="local:${local_ip}"
+  
+  if [ ! -z ${tun0_ip} ]; then
+    display_ip="${display_ip} - vpn:${tun0_ip}"
+  fi
+  
+  echo "${display_ip}"
 }
 
 #
 ###### Prompt #######
 #
-
-# Arch home
-local_ip=`get_ip enp6s0`
-if [ -z "${local_ip}" ]; then
-  # Arch VM
-  local_ip=`get_ip enp0s3`
-
-  if [ -z "${local_ip}" ]; then
-    # Kali
-    local_ip=`get_ip eth0`
-  fi
-fi
-vpn_ip=`get_ip tun0`
-
-if [ -z "${vpn_ip}" ]; then
-  display_ip="local:$local_ip" 
-else
-  display_ip="vpn:$vpn_ip"
-fi 
-
 if [[ `whoami` == "root" ]]; then
-  PS1='[%F{yellow}%*%f]-[%F{blue}${display_ip}%f]-[%F{red}%n%f@%F{blue}%m%f]-[%F{red}%~%f] $ '
+  PS1='[%F{yellow}%*%f]-[%F{blue}$(get_ip)%f]-[%F{red}%n%f@%F{blue}%m%f]-[%F{red}%~%f] $ '
 else
-  PS1='[%F{yellow}%*%f]-[%F{blue}${display_ip}%f]-[%F{green}%n%f@%F{blue}%m%f]-[%F{green}%~%f] $ '
+  PS1='[%F{yellow}%*%f]-[%F{blue}$(get_ip)%f]-[%F{green}%n%f@%F{blue}%m%f]-[%F{green}%~%f] $ '
 fi
 
 setopt promptsubst
