@@ -138,3 +138,5 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=0
 export QT_SCALE_FACTOR=1
 export CHROME_BIN=/usr/bin/chromium
 export JUPYTERLAB_DIR=$HOME/.local/share/jupyter/lab
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
+
