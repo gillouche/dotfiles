@@ -2,13 +2,14 @@
 # tasks file for git
 
 - name: Install git (Ubuntu/Debian)
-  yay:
+  apt:
     name: git
     state: latest
+  become: true
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Install git (Arch)
-  pacman:
+  yay:
     name: git
     state: latest
   when: ansible_distribution == 'Archlinux'

@@ -78,7 +78,7 @@
   systemd:
     name: tmux.service
     daemon_reload: true
-    state: restarted 
+    state: started 
     scope: user
   become: true
   become_user: "{{ target_user }}"
