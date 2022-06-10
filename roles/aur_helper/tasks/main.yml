@@ -71,12 +71,20 @@
     state: present
   when: not yay_installed
 
-- name: "Define role executed var {{ role_name }}_was_executed"
-  set_fact:
-    "{{ role_name }}_was_executed": true
-    cacheable: true
-
 - name: Update cache/upgrade
   yay:
     update_cache: yes 
     upgrade: yes
+  when: ansible_distribution == 'Archlinux'
+
+- name: Update cache/upgrade
+  apt:
+    update_cache: yes 
+    upgrade: yes
+  become: true
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: "Define role executed var {{ role_name }}_was_executed"
+  set_fact:
+    "{{ role_name }}_was_executed": true
+    cacheable: true
