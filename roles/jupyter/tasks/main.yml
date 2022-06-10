@@ -8,10 +8,9 @@
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Install jupyter notebooks (Arch)
-  pacman:
+  yay:
     name: "{{ item }}"
     state: latest
-  become: true
   with_items:
     - "jupyter-notebook"
     - "jupyterlab"
