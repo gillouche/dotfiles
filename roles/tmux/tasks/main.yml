@@ -9,11 +9,32 @@
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Install tmux (Arch)
-  pacman:
-    name: tmux
+  yay:
+    name: "tmux"
     state: latest
-  become: true
   when: ansible_distribution == 'Archlinux'
+
+- name: Create tmux plugins directory
+  file:
+    path: "/home/{{ target_user }}/.tmux/plugins/"
+    state: directory 
+    recurse: true
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: 0755
+
+- name: Check if tmux plugin manager is installed
+  stat: 
+    path: "/home/{{ target_user }}/.tmux/plugins/tpm"
+  register: tpm_directory
+
+- name: Clone tmux plugin manager
+  git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "/home/{{ target_user }}/.tmux/plugins/tpm"
+    clone: true 
+    update: true
+    force: true
 
 - name: Create symlink config
   file: 
@@ -54,12 +75,12 @@
   changed_when: false
 
 - name: Start tmux
+  systemd:
+    name: tmux.service
+    daemon_reload: true
+    state: started 
+    scope: user
   become: true
   become_user: "{{ target_user }}"
   environment:
     XDG_RUNTIME_DIR: "{{ xdg_runtime_dir }}"
-  systemd:
-    name: tmux.service
-    daemon_reload: true
-    state: restarted 
-    scope: user

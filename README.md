@@ -22,5 +22,5 @@ Additionally, the verbosity can be passed to the script
 bash run.sh -vvvv
 ```
 
-which will print the facts (for -vvvv only) and exits.
+which will print the facts (for -vvvv only) and exits (if 4).
 
