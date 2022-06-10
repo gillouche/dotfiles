@@ -9,6 +9,7 @@
   shell:
     cmd: which yay
   register: result
+  ignore_errors: true
 
 - name: Set fact that yay is not installed 
   set_fact:
