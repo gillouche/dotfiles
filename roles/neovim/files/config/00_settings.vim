@@ -15,7 +15,9 @@ set textwidth=0             " By default, don't wrap at any specific
 set linebreak wrap          " Wrap text while typing (this is a soft wrap
                             " without textwidth set).
 set number                  " Use line numbering.
-set ts=4                    " tab stop
+set list                    " Show whitespace as character
+set expandtab               " To replace tab by space
+set tabstop=4               " tab stop
 set shiftwidth=4            
 set showcmd                 " Show commands as I am typing them.
 set whichwrap=h,l,~,[,]     " These keys will move the cursor over line
@@ -114,5 +116,9 @@ let g:SuperTabDefaultCompletionType = "context"
 " ------------------------------- EasyMotion --------------------------------
 nmap s <Plug>(easymotion-s)
 let g:EasyMotion_smartcase = 1
+
+" --------------------------- Better Whitespace ----------------------------
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
 
 " vim: set et ts=4 sw=4 :
