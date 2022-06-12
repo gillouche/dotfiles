@@ -3,14 +3,14 @@
 
 - name: Install tmux (Ubuntu/Debian)
   apt:
-    name: tmux
+    name: ["tmux", "xclip"]
     state: latest
   become: true
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Install tmux (Arch)
   yay:
-    name: "tmux"
+    name: ["tmux", "xclip"]
     state: latest
   when: ansible_distribution == 'Archlinux'
 
