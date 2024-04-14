@@ -1,26 +1,26 @@
 [user]
     name = Gilles Habran
     email = gilleshabran@protonmail.com
-    signingkey = 3E72F79037D9CD8D
+    signingkey = F254BCB60FE2AA68C19C2464124A6E763E6736DE
 
 [color]
     ui = auto
     diff = auto
     status = auto
     branch = auto
-    
+
 [color "branch"]
     current = yellow bold
     local = green bold
     remote = cyan bold
-    
+
 [color "diff"]
     meta = yellow bold
     frag = magenta bold
     old = red bold
     new = green bold
     whitespace = red reverse
-    
+
 [color "status"]
     added = green bold
     changed = yellow bold
@@ -62,7 +62,7 @@
     rehh = reset --hard HEAD
     whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
     whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
-   
+
 [web]
     browser = firefox
 [url "https://invent.kde.org/"]
@@ -72,7 +72,7 @@
 [pull]
 	rebase = false
 [commit]
-	gpgsign = false
+	gpgsign = true
 [gpg]
 	program = gpg2
 [receive]

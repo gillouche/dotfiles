@@ -1,11 +1,19 @@
 ---
 # tasks file for idea
 
+- name: Check if idea.conf  exists
+  stat:
+    path: "/etc/sysctl.d/idea.conf"
+  register: idea_file
+  become: true
+
 - name: Remove existing idea.conf 
   file: 
     path: /etc/sysctl.d/idea.conf
     state: absent
+  when: idea_file.stat.exists and idea_file.stat.islnk is defined and idea_file.stat.islnk == False
   become: true
+  changed_when: true
 
 - name: Create symlink for specific config inotify for intellij
   file: 

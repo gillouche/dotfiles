@@ -23,15 +23,15 @@ HIST_STAMPS="yyyy-mm-dd"
 ###### terminal #######
 #
 # restore terminal settings on exiting abnormally
-ttyctl -f 
+ttyctl -f
 
 # Automatically new packages from /usr/bin in the PATH
 zstyle ':completion:*' rehash true
 autoload -U colors && colors
 
 #
-###### Locale and others  ####### 
-# 
+###### Locale and others  #######
+#
 export LANG=en_US.UTF-8
 export LC_ALL=C
 export LC_CTYPE=en_US.UTF-8
@@ -42,33 +42,33 @@ export LC_MESSAGES="C"
 ###### plugins #######
 #
 plugins=(
-  archlinux 
+  archlinux
   1password
-  git 
-  gitfast 
-  git-extras 
-  common-aliases 
-  docker 
-  encode64 
-  fbterm 
-  dircycle 
-  dirhistory 
-  history 
-  python 
-  aws 
-  sudo 
-  systemd 
-  jsontools 
-  httpie 
-  pip 
+  git
+  gitfast
+  git-extras
+  common-aliases
+  docker
+  encode64
+  fbterm
+  dircycle
+  dirhistory
+  history
+  python
+  aws
+  sudo
+  systemd
+  jsontools
+  httpie
+  pip
 )
 
 #
 ###### path #######
 #
 typeset -U path
-path=(/usr/local/sbin /usr/sbin /sbin /usr/bin /bin /opt/cuda/bin /usr/lib/jvm/default/bin /usr/bin/site_perl /usr/bin/vendor_perl /usr/bin/core_perl)
-export PATH 
+path=(/usr/local/sbin /usr/sbin /sbin /usr/bin /usr/local/bin /bin /usr/lib/jvm/default/bin /usr/bin/vendor_perl /usr/bin/core_perl)
+export PATH
 
 #
 ###### Execute scripts #######
@@ -83,7 +83,7 @@ function get_ip {
   enp6s0_ip="$(ifconfig enp6s0 2> /dev/null | grep "inet " | cut -d " " -f 10)"
   enp0s3_ip="$(ifconfig enp0s3 2> /dev/null | grep "inet " | cut -d " " -f 10)"
   tun0_ip="$(ifconfig tun0 2> /dev/null | grep "inet " | cut -d " " -f 10)"
-  
+
   local_ip="127.0.0.1"
   if [ ! -z ${eth0_ip} ]; then
     local_ip="${eth0_ip}"
@@ -92,13 +92,13 @@ function get_ip {
   elif [ ! -z ${enp0s3_ip} ]; then
     local_ip="${enp0s3_ip}"
   fi
-  
+
   display_ip="local:${local_ip}"
-  
+
   if [ ! -z ${tun0_ip} ]; then
     display_ip="${display_ip} - vpn:${tun0_ip}"
   fi
-  
+
   echo "${display_ip}"
 }
 
@@ -133,10 +133,9 @@ export TERM="xterm-256color"
 export GTK_USE_PORTAL=1
 export EDITOR=nvim
 export SYSTEMD_PAGER=nvim
-export PLASMA_USE_QT_SCALING=1
-export QT_AUTO_SCREEN_SCALE_FACTOR=0
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_ENABLE_HIGHDPI_SCALING=1
 export QT_SCALE_FACTOR=1
 export CHROME_BIN=/usr/bin/chromium
-export JUPYTERLAB_DIR=$HOME/.local/share/jupyter/lab
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 

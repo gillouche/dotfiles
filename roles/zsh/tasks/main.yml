@@ -91,15 +91,30 @@
   with_items:
     - alias.conf
 
+- name: Check for config created by oh-my-zsh install for user
+  stat:
+    path: "/home/{{ target_user }}/.zshrc"
+  changed_when: false
+  register: zsh_config_folder_user
+
 - name: Delete config created by oh-my-zsh install for user
   file:
     path: "/home/{{ target_user }}/.zshrc"
     state: absent
+  when: zsh_config_folder_user.stat.exists and zsh_config_folder_user.stat.islnk is defined and zsh_config_folder_user.stat.islnk == False
+
+- name: Check for config created by oh-my-zsh install for root
+  stat:
+    path: "/root/.zshrc"
+  changed_when: false
+  become: true
+  register: zsh_config_folder_root
 
 - name: Delete config created by oh-my-zsh install for root
   file:
     path: "/root/.zshrc"
     state: absent
+  when: zsh_config_folder_root.stat.exists and zsh_config_folder_root.stat.islnk is defined and zsh_config_folder_root.stat.islnk == False
   become: true
 
 - name: Create symlink to zshrc config for user

@@ -6,7 +6,7 @@
     - git
     - gpg
     - idea
+    - neovim
     - tmux
     - zsh
-    - jupyter 
-    - neovim
+

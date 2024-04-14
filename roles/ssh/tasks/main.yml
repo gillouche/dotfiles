@@ -10,6 +10,6 @@
 
 - name: Install openssh (Arch)
   yay:
-    name: openssh-client
+    name: openssh
     state: latest
   when: ansible_distribution == 'Archlinux'

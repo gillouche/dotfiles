@@ -8,6 +8,7 @@
 - name: Check if yay is installed
   shell:
     cmd: which yay
+  changed_when: false
   register: result
   ignore_errors: true
 

@@ -19,29 +19,17 @@
     path: "/home/{{ target_user }}/.config/nvim"
   register: nvim_config_folder
 
-- name: Create nvim config folder
-  file:
-    path: "/home/{{ target_user }}/.config/nvim"
-    state: directory 
-    recurse: true
-    owner: "{{ target_user }}"
-    group: "{{ target_user }}"
-    mode: 0755
-  when: not nvim_config_folder.stat.exists
+- name: Print debug message
+  ansible.builtin.debug:
+    msg: "Path exists and isn't a symlink"
+  when: nvim_config_folder.stat.islnk is defined and nvim_config_folder.stat.islnk == False
 
-- name: Create symlink for config folders
-  file:
-    src: "{{ role_path }}/files/{{ item }}" 
-    dest: "/home/{{ target_user }}/.config/nvim/{{ item }}"
-    state: link
-  with_items:
-    - colors 
-    - config 
-    - init.vim
-
-- name: Create symlink for nvimrc 
-  file:
-    src: "{{ role_path }}/files/vimrc"
-    dest: "/home/{{ target_user }}/.nvimrc"
-    state: link
+- name: Moving existing folder to nvim_backup
+  command: mv "/home/{{ target_user }}/.config/nvim" "/home/{{ target_user }}/.config/nvim_backup"
+  when: nvim_config_folder.stat.exists and nvim_config_folder.stat.islnk is defined and nvim_config_folder.stat.islnk == False
   
+- name: Create symlink for nvim 
+  file:
+    src: "{{ role_path }}/files/nvim"
+    dest: "/home/{{ target_user }}/.config/nvim"
+    state: link
