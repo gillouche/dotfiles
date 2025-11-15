@@ -30,77 +30,46 @@ zstyle ':completion:*' rehash true
 autoload -U colors && colors
 
 #
-###### Locale and others  #######
-#
-export LANG=en_US.UTF-8
-export LC_ALL=C
-export LC_CTYPE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-export LC_MESSAGES="C"
-
-#
 ###### plugins #######
 #
 plugins=(
-  archlinux
-  1password
-  git
-  gitfast
-  git-extras
-  common-aliases
-  docker
-  encode64
-  fbterm
-  dircycle
-  dirhistory
-  history
-  python
-  aws
-  sudo
-  systemd
-  jsontools
-  httpie
-  pip
+    aliases
+    alias-finder
+    ansible
+    git
+    gitfast
+    git-extras
+    docker
+    encode64
+    dirhistory
+    history
+    jsontools
+    httpie
+    macos
 )
 
 #
 ###### path #######
 #
 typeset -U path
-path=(/usr/local/sbin /usr/sbin /sbin /usr/bin /usr/local/bin /bin /usr/lib/jvm/default/bin /usr/bin/vendor_perl /usr/bin/core_perl)
+path=(
+    /usr/local/bin
+    /usr/bin
+    /bin
+    /usr/local/sbin
+    /usr/sbin
+    /sbin
+    $HOME/.rd/bin
+    /nix/var/nix/profiles/default/bin
+    /opt/homebrew/bin
+    /opt/homebrew/sbin
+)
 export PATH
 
 #
 ###### Execute scripts #######
 #
 source $ZSH/oh-my-zsh.sh
-
-#
-###### Functions #######
-#
-function get_ip {
-  eth0_ip="$(ifconfig eth0 2> /dev/null | grep "inet " | cut -d " " -f 10)"
-  enp6s0_ip="$(ifconfig enp6s0 2> /dev/null | grep "inet " | cut -d " " -f 10)"
-  enp0s3_ip="$(ifconfig enp0s3 2> /dev/null | grep "inet " | cut -d " " -f 10)"
-  tun0_ip="$(ifconfig tun0 2> /dev/null | grep "inet " | cut -d " " -f 10)"
-
-  local_ip="127.0.0.1"
-  if [ ! -z ${eth0_ip} ]; then
-    local_ip="${eth0_ip}"
-  elif [ ! -z ${enp6s0_ip} ]; then
-    local_ip="${enp6s0_ip}"
-  elif [ ! -z ${enp0s3_ip} ]; then
-    local_ip="${enp0s3_ip}"
-  fi
-
-  display_ip="local:${local_ip}"
-
-  if [ ! -z ${tun0_ip} ]; then
-    display_ip="${display_ip} - vpn:${tun0_ip}"
-  fi
-
-  echo "${display_ip}"
-}
 
 #
 ###### Prompt #######
@@ -114,14 +83,6 @@ fi
 setopt promptsubst
 
 #
-###### GPG #######
-#
-if [[ `whoami` != "root" ]]; then
-  export SSH_AUTH_SOCK=""${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh""
-  export GPG_TTY=$(tty)
-  gpg-connect-agent updatestartuptty /bye >/dev/null
-fi
-#
 ###### Alias ######
 #
 source ${HOME}/.zsh/alias.conf
@@ -133,9 +94,43 @@ export TERM="xterm-256color"
 export GTK_USE_PORTAL=1
 export EDITOR=nvim
 export SYSTEMD_PAGER=nvim
-export QT_AUTO_SCREEN_SCALE_FACTOR=1
-export QT_ENABLE_HIGHDPI_SCALING=1
-export QT_SCALE_FACTOR=1
-export CHROME_BIN=/usr/bin/chromium
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
+
+#
+###### docker alias #######
+#
+alias docker_kill='docker kill $(docker ps -q)'
+alias docker_rmc='docker rm $(docker ps -a -q)'
+alias docker_rmi='docker rmi $(docker images -q)'
+alias docker_rmv='docker volume rm $(docker volume ls -q -f dangling=true)'
+
+#
+###### simple alias for automatic options #######
+#
+alias agi="ag -i "
+
+if [[ -x `which htop`  ]]; then
+    alias top="htop";
+fi
+
+alias grep='grep --color=auto '
+alias egrep='egrep --color=auto '
+alias fgrep='fgrep --color=auto '
+alias mkdir='mkdir -pv '
+alias diff='colordiff'
+alias h='history'
+alias j='jobs -l'
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
+alias vi=nvim
+alias vim=nvim
+alias edit='nvim'
+alias rm='rm -I --preserve-root '
+alias mv='mv -i '
+alias ln='ln -i '
+alias chown='chown --preserve-root '
+alias chmod='chmod --preserve-root '
+alias chgrp='chgrp --preserve-root '
+alias wget='wget -c '
+alias df='df -H '
 
