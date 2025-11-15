@@ -83,11 +83,6 @@ fi
 setopt promptsubst
 
 #
-###### Alias ######
-#
-source ${HOME}/.zsh/alias.conf
-
-#
 ###### Environment variables #######
 #
 export TERM="xterm-256color"
