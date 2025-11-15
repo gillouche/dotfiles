@@ -72,3 +72,5 @@
 	program = gpg
 [receive]
 	advertisePushOptions = true
+[credential]
+	helper = 
