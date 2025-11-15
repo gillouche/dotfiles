@@ -1,4 +1,4 @@
-# Do not override PATH inside a Nix shell
+# If inside a Nix shell, do not override PATH
 if [[ -n "$IN_NIX_SHELL" ]]; then
   return
 fi
