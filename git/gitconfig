@@ -65,15 +65,11 @@
 
 [web]
     browser = firefox
-[url "https://invent.kde.org/"]
-	insteadOf = kde:
-[url "ssh://git@invent.kde.org/"]
-	pushInsteadOf = kde:
 [pull]
 	rebase = false
 [commit]
 	gpgsign = true
 [gpg]
-	program = gpg2
+	program = gpg
 [receive]
 	advertisePushOptions = true
