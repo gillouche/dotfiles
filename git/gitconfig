@@ -1,7 +1,6 @@
 [user]
     name = Gilles Habran
     email = gilleshabran@protonmail.com
-    signingkey = F254BCB60FE2AA68C19C2464124A6E763E6736DE
 
 [color]
     ui = auto
@@ -68,7 +67,7 @@
 [pull]
 	rebase = false
 [commit]
-	gpgsign = true
+	gpgsign = false
 [gpg]
 	program = gpg
 [receive]
