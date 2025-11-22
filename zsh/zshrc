@@ -90,9 +90,9 @@ source $ZSH/oh-my-zsh.sh
 ###### Prompt #######
 #
 if [[ `whoami` == "root" ]]; then
-  PS1='[%F{yellow}%*%f]-[%F{red}%n%f@%F{blue}%m%f]-[%F{red}%~%f] # '
+  PS1='[%F{yellow}%*%f]-[%F{red}%n%f@%F{blue}%m%f]-[%F{red}%2d%f] # '
 else
-  PS1='[%F{yellow}%*%f]-[%F{green}%n%f@%F{blue}%m%f]-[%F{green}%~%f] $ '
+  PS1='[%F{yellow}%*%f]-[%F{green}%n%f@%F{blue}%m%f]-[%F{green}%2d%f] $ '
 fi
 
 setopt promptsubst
