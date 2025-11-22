@@ -1,6 +1,5 @@
-[user]
-    name = Gilles Habran
-    email = gilleshabran@protonmail.com
+[include]
+    path = ~/.gitconfig.user
 
 [color]
     ui = auto
