@@ -37,6 +37,7 @@
     c = commit
     ca = commit -a
     cm = commit -m
+    cam = commit -am
     cd = commit --amend
     cad = commit -a --amend
     co = checkout
@@ -72,4 +73,4 @@
 [receive]
 	advertisePushOptions = true
 [credential]
-	helper = 
+	helper =
