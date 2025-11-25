@@ -140,3 +140,4 @@ alias mv='mv -i '
 alias ln='ln -i '
 alias wget='wget -c '
 alias df='df -H '
+alias k="kubectl"
