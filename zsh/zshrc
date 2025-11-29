@@ -142,9 +142,6 @@ alias wget='wget -c '
 alias df='df -H '
 alias k="kubectl "
 alias ktx="kubectx "
-#alias gpg="gpg --pinentry-mode loopback "
-alias gpg="gpg "
-
 
 # GPG / SSH
 export GPG_TTY=$(tty)
