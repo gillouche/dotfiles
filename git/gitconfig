@@ -69,7 +69,7 @@
 [commit]
 	gpgsign = true
 [gpg]
-	program = /usr/local/bin/gpg-loopback
+	program = gpg
 [receive]
 	advertisePushOptions = true
 [credential]
