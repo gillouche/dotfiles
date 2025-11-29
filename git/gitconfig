@@ -67,10 +67,12 @@
 [pull]
 	rebase = false
 [commit]
-	gpgsign = false
+	gpgsign = true
 [gpg]
-	program = gpg
+	program = /usr/local/bin/gpg-loopback
 [receive]
 	advertisePushOptions = true
 [credential]
 	helper =
+[tag]
+	gpgsign = true
