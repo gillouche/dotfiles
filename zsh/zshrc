@@ -142,7 +142,12 @@ alias wget='wget -c '
 alias df='df -H '
 alias k="kubectl "
 alias ktx="kubectx "
+alias ls="ls --color=auto "
 
 # GPG / SSH
 export GPG_TTY=$(tty)
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/gillouche/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
