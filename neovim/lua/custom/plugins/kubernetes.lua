@@ -1,4 +1,4 @@
-return require("lazy").setup({
+return {
 
     -- SchemaStore provides access to many JSON/YAML schemas (including Kubernetes CRDs)
     {
@@ -10,26 +10,23 @@ return require("lazy").setup({
         "neovim/nvim-lspconfig",
         dependencies = { "b0o/SchemaStore.nvim" },
         config = function()
-            local lspconfig = require("lspconfig")
             local schemastore = require("schemastore")
 
-            lspconfig.yamlls.setup({
+            -- Use the new recommended setup
+            require("lspconfig").yamlls.setup({
                 settings = {
                     yaml = {
-                        -- Use SchemaStore for Kubernetes & CRDs
                         schemas = schemastore.yaml.schemas(),
-                        validate = true,          -- enable validation
-                        format = { enable = true }, -- formatting
-                        hover = true,             -- documentation on hover
-                        completion = true,        -- autocompletion
-                        -- Helm templates support
+                        validate = true,
+                        format = { enable = true },
+                        hover = true,
+                        completion = true,
                         customTags = {
                             "!Base64", "!Cidr", "!And", "!Equals", "!Not", "!Or",
                             "!If", "!Not", "!FindInMap", "!Ref", "!Sub",
                         },
                     },
                 },
-                -- Treat Helm templates (.tpl) as YAML for LSP
                 filetypes = { "yaml", "helm" },
             })
         end,
@@ -43,4 +40,4 @@ return require("lazy").setup({
             opts.formatters_by_ft.yaml = { "prettierd" }
         end,
     },
-})
+}
