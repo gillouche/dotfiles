@@ -12,8 +12,7 @@ return {
         config = function()
             local schemastore = require("schemastore")
 
-            -- Use the new recommended setup
-            require("lspconfig").yamlls.setup({
+            local config = {
                 settings = {
                     yaml = {
                         schemas = schemastore.yaml.schemas(),
@@ -28,7 +27,13 @@ return {
                     },
                 },
                 filetypes = { "yaml", "helm" },
-            })
+            }
+
+            if vim.lsp.config then
+                vim.lsp.config["yamlls"] = config
+            else
+                require("lspconfig").yamlls.setup(config)
+            end
         end,
     },
 
