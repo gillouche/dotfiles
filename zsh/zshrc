@@ -156,3 +156,12 @@ export KUBECONFIG=~/.kube/config:~/.kube/k3s.yaml
 
 # Added by Antigravity
 export PATH="/Users/gillouche/.antigravity/antigravity/bin:$PATH"
+
+# bun completions
+[ -s "/Users/gillouche/.bun/_bun" ] && source "/Users/gillouche/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias claude-mem='/Users/gillouche/.bun/bin/bun "/Users/gillouche/.claude/plugins/cache/thedotmack/claude-mem/10.5.5/scripts/worker-service.cjs"'
