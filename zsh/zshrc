@@ -152,7 +152,7 @@ export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export PATH="/Users/gillouche/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-export KUBECONFIG=~/.kube/config:~/.kube/k3s.yaml
+export KUBECONFIG=~/.kube/config
 
 # Added by Antigravity
 export PATH="/Users/gillouche/.antigravity/antigravity/bin:$PATH"
